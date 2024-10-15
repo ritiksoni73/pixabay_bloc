@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pixabay_bloc/presentation/pages/full_image_view.dart';
 import 'package:pixabay_bloc/utills/contants.dart';
 import '../bloc/image_bloc.dart';
 import '../../domain/entities/image_entity.dart';
@@ -78,10 +79,10 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
                   ),
                 ),
                 if (_isLoadingMore)
-                  SliverToBoxAdapter(
+                  const SliverToBoxAdapter(
                     child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(15),
+                        padding: EdgeInsets.all(15),
                         child: CircularProgressIndicator(),
                       ),
                     ),
@@ -98,7 +99,12 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
     return Column(
       children: [
         Expanded(
-          child: Image.network(image.imageUrl, fit: BoxFit.cover),
+          child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => FullImageView(image.imageUrl)));
+              },
+              child: Image.network(image.imageUrl, fit: BoxFit.cover)),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
